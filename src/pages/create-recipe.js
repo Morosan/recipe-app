@@ -6,6 +6,7 @@ import { useCookies } from "react-cookie";
 
 export const CreateRecipe = () => {
   const userID = useGetUserID();
+  // eslint-disable-next-line no-unused-vars
   const [cookies, _] = useCookies(["access_token"]);
   const [recipe, setRecipe] = useState({
     name: "",
@@ -40,7 +41,7 @@ export const CreateRecipe = () => {
     event.preventDefault();
     try {
       await axios.post(
-        "http://localhost:3001/recipes",
+        "https://recipe-app-backend-ggcu.onrender.com/recipes",
         { ...recipe },
         {
           headers: { authorization: cookies.access_token },

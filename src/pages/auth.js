@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
@@ -24,7 +25,7 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      const result = await axios.post("http://localhost:3001/auth/login", {
+      const result = await axios.post("https://recipe-app-backend-ggcu.onrender.com/auth/login", {
         username,
         password,
       });
@@ -75,7 +76,7 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:3001/auth/register", {
+      await axios.post("https://recipe-app-backend-ggcu.onrender.com/auth/register", {
         username,
         password,
       });

@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../components/button";
 
 export const Auth = () => {
   return (
@@ -18,8 +19,17 @@ const Login = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState(false);
+
 
   const navigate = useNavigate();
+
+  const handleClick = () => {
+    setLoading(true)
+    setTimeout(() => {
+        setLoading(false)
+    }, 3000)
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -42,6 +52,12 @@ const Login = () => {
     <div className="auth-container">
       <form onSubmit={handleSubmit}>
         <h2>Login</h2>
+        <Button 
+          className="primary"
+          text="test button"
+          onClick={handleClick}
+          isLoading={isLoading}
+        />
         <div className="form-group">
           <label htmlFor="username">Username:</label>
           <input
@@ -60,7 +76,7 @@ const Login = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-        <button type="submit">Login</button>
+        <button className="button primary" type="submit">Login</button>
       </form>
     </div>
   );
@@ -108,7 +124,7 @@ const Register = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-        <button type="submit">Register</button>
+        <button className="button primary" type="submit">Register</button>
       </form>
     </div>
   );

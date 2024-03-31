@@ -12,7 +12,7 @@ export const Home = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await axios.get("https://recipe-app-backend-ggcu.onrender.com/recipes");
+        const response = await axios.get("http://localhost:3001/recipes");
         setRecipes(response.data);
       } catch (err) {
         console.log(err);
@@ -22,7 +22,7 @@ export const Home = () => {
     const fetchSavedRecipes = async () => {
       try {
         const response = await axios.get(
-          `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/ids/${userID}`
+          `http://localhost:3001/recipes/savedRecipes/ids/${userID}`
         );
         setSavedRecipes(response.data.savedRecipes);
       } catch (err) {
@@ -36,7 +36,7 @@ export const Home = () => {
 
   const saveRecipe = async (recipeID) => {
     try {
-      const response = await axios.put("https://recipe-app-backend-ggcu.onrender.com/recipes", {
+      const response = await axios.put("http://localhost:3001/recipes", {
         recipeID,
         userID,
       });
@@ -50,25 +50,27 @@ export const Home = () => {
 
   return (
     <section>
-      <h1>Recipes</h1>
+      <h1 className="main-heading">Recipes:</h1>
       
       <ul>
         {recipes.map((recipe) => (
           <li key={recipe._id}>
             <div>
-              <h2>{recipe.name}</h2>
+              <h2 className="sub-heading">{recipe.name}</h2>
               <button
+                className="button secondary"
                 onClick={() => saveRecipe(recipe._id)}
                 disabled={isRecipeSaved(recipe._id)}
               >
                 {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
               </button>
             </div>
-            <div className="instructions">
+            
+            <div className="paragraph instructions">
               <p>{recipe.instructions}</p>
             </div>
             <img src={recipe.imageUrl} alt={recipe.name} />
-            <p>Cooking Time: {recipe.cookingTime} minutes</p>
+            <p className="paragraph">Cooking Time: {recipe.cookingTime} minutes</p>
           </li>
         ))}
       </ul>

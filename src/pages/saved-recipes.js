@@ -11,7 +11,7 @@ export const SavedRecipes = () => {
     const fetchSavedRecipes = async () => {
       try {
         const response = await axios.get(
-          `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/${userID}`
+          `http://localhost:3001/recipes/savedRecipes/${userID}`
         );
         setSavedRecipes(response.data.savedRecipes);
       } catch (err) {
@@ -22,20 +22,27 @@ export const SavedRecipes = () => {
     fetchSavedRecipes();
   }, []);
   return (
-    <div>
-      <h1>Saved Recipes</h1>
+    <section>
+      <h1 className="main-heading">Saved Recipes:</h1>
       <ul>
         {savedRecipes.map((recipe) => (
           <li key={recipe._id}>
             <div>
               <h2>{recipe.name}</h2>
             </div>
+            <ul>
+              {recipe.ingredients.map((ingredient) => (
+                <li key={ingredient._id}>
+                  <p>{ingredient}</p>
+                </li>
+              ))}
+            </ul>
             <p>{recipe.description}</p>
             <img src={recipe.imageUrl} alt={recipe.name} />
             <p>Cooking Time: {recipe.cookingTime} minutes</p>
           </li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 };

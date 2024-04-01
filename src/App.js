@@ -5,6 +5,7 @@ import { CreateRecipe } from "./pages/create-recipe";
 import { SavedRecipes } from "./pages/saved-recipes";
 import { Navbar } from "./components/navbar";
 import { Logo } from "./components/logo";
+import { Footer } from "./components/footer";
 
 import "./App.css";
 import "./styles/index.scss";
@@ -18,12 +19,16 @@ function App() {
             <Navbar />
           </header>
           
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/create-recipe" element={<CreateRecipe />} />
-            <Route path="/saved-recipes" element={<SavedRecipes />} />
-          </Routes>
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/create-recipe" element={<CreateRecipe />} />
+              <Route path="/saved-recipes" element={<SavedRecipes />} />
+            </Routes>
+          </main>
+
+          <Footer />
         </Router>
     </div>
   );

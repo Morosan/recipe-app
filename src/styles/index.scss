@@ -5,6 +5,11 @@
 @import 'base/global';
 @import 'base/typography';
 
+// Utils
+// @import 'utils/variables';
+@import 'utils/mixins';
+// @import 'utils/functions';
+
 // Components
 @import 'components/buttons';
 @import 'components/forms';
@@ -14,10 +19,5 @@
 // Layout
 @import 'layout/main-nav';
 @import 'layout/header';
-// @import 'layout/footer';
+@import 'layout/footer';
 // @import 'layout/grid';
-
-// Utils
-// @import 'utils/variables';
-// @import 'utils/mixins';
-// @import 'utils/functions';

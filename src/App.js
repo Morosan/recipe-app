@@ -7,6 +7,7 @@ import { Navbar } from "./components/navbar";
 import { Logo } from "./components/logo";
 import { Footer } from "./components/footer";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
 import "./styles/index.scss";
 

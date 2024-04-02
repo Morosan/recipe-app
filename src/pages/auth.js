@@ -7,10 +7,16 @@ import { Button } from "../components/button";
 
 export const Auth = () => {
   return (
-    <div className="auth">
-      <Login />
-      <Register />
-    </div>
+    <section className="container">
+      <div className="row">
+        <div className="col">
+          <Login />
+        </div>
+        <div className="col">
+          <Register />
+        </div>
+      </div>
+    </section>
   );
 };
 
@@ -24,15 +30,9 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    setLoading(true)
-    setTimeout(() => {
-        setLoading(false)
-    }, 3000)
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true)
 
     try {
       const result = await axios.post(
@@ -42,58 +42,64 @@ const Login = () => {
         username,
         password,
       });
-
       setCookies("access_token", result.data.token);
       window.localStorage.setItem("userID", result.data.userID);
+      setLoading(false)
       navigate("/");
     } catch (error) {
+      setLoading(false)
       console.error(error);
     }
   };
 
   return (
-    <div className="auth-container">
-      <form onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        <Button 
-          className="primary"
-          text="test button"
-          onClick={handleClick}
-          isLoading={isLoading}
-        />
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
-        <button className="button primary" type="submit">Login</button>
-      </form>
-    </div>
+    <>
+      <div className="auth-container">
+        <form onSubmit={handleSubmit}>
+          <h2>Login</h2>
+          <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </div>
+          <Button 
+            className="button primary" 
+            type="submit"
+            isLoading={isLoading}
+          >
+            Login
+          </Button>
+        </form>
+      </div>
+    </>
   );
 };
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   const [_, setCookies] = useCookies(["access_token"]);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true)
+
     try {
       await axios.post(
         // "https://recipe-app-backend-ggcu.onrender.com/auth/register"
@@ -103,7 +109,9 @@ const Register = () => {
         password,
       });
       alert("Registration Completed! Now login.");
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.error(error);
     }
   };
@@ -130,7 +138,13 @@ const Register = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-        <button className="button primary" type="submit">Register</button>
+        <Button 
+          className="button primary" 
+          type="submit"
+          isLoading={isLoading}
+        >
+          Register
+        </Button>
       </form>
     </div>
   );

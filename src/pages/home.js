@@ -7,6 +7,7 @@ import axios from "axios";
 export const Home = () => {
   const [recipes, setRecipes] = useState([]);
   const [savedRecipes, setSavedRecipes] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [cookies, setCookies] = useCookies(["access_token"]);
 
   const userID = useGetUserID();

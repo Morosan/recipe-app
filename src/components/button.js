@@ -1,6 +1,6 @@
 import Spinner from 'react-bootstrap/Spinner';
 
-export const Button = ({ text, className, type, onSubmit, isLoading, onClick }) => {
+export const Button = ({ children, className, type, onSubmit, isLoading, onClick }) => {
     return (
         <button 
             className={`button ${className}`} 
@@ -13,7 +13,7 @@ export const Button = ({ text, className, type, onSubmit, isLoading, onClick }) 
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>
                 :
-                text 
+                children 
             }
         </button>
     )

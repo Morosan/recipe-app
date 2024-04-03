@@ -9,17 +9,44 @@
   align-items: center;
   justify-content: center;
   min-width: 14rem;
+  text-decoration: none;
+  height: 4.2rem;
+  cursor: pointer;
 
-  .spinner-border {
-  }
-
+  
   &.primary {
     background: $primary-color;
+    
+    &:hover,
+    &:focus,
+    &:active {
+      background: $white;
+      color: $primary-color;
+      border: 1px solid $primary-color;
+    }
   }
 
   &.secondary {
     background: $white;
     color: $primary-color;
     border: 1px solid $primary-color;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background: $primary-color;
+      color: $white;
+      border: 1px solid transparent;
+    }
+  }
+
+  &.favorite {
+    background: transparent;
+    color: $favorite-color;
+    padding: 1.4rem;
+    min-width: auto;
+    height: auto;
+    font-size: 2rem;
+    border: none;
   }
 }

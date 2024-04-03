@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie"
 import { useGetUserID } from "../hooks/useGetUserID";
 import axios from "axios";
 
 export const Home = () => {
   const [recipes, setRecipes] = useState([]);
   const [savedRecipes, setSavedRecipes] = useState([]);
+  const [cookies, setCookies] = useCookies(["access_token"]);
 
   const userID = useGetUserID();
 
@@ -56,28 +58,41 @@ export const Home = () => {
   const isRecipeSaved = (id) => savedRecipes.includes(id);
 
   return (
-    <section>
-      <h1 className="main-heading">Recipes:</h1>
+    <section className="container mb-5">
+      <h1 className="main-heading mb-5">Recipes:</h1>
       
-      <ul>
+      <ul className="row">
         {recipes.map((recipe) => (
-          <li key={recipe._id}>
-            <div>
-              <h2 className="sub-heading">{recipe.name}</h2>
-              <button
-                className="button secondary"
-                onClick={() => saveRecipe(recipe._id)}
-                disabled={isRecipeSaved(recipe._id)}
-              >
-                {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
-              </button>
+          <li className="col-lg-4 col-md-6" key={recipe._id}>
+            <div className="card">
+              <div href="/" className="img-wrapper">
+                <img className="card-img" src={recipe.imageUrl} alt={recipe.name} />
+              </div>
+              <div className="card-inner-wrapper">
+                <div className="title-wrapper">
+                  <a href="/" className="card-title sub-heading">{recipe.name}</a>
+                  {cookies.access_token && (
+                    <button
+                      className="button favorite"
+                      onClick={() => saveRecipe(recipe._id)}
+                      disabled={isRecipeSaved(recipe._id)}
+                    >
+                      {isRecipeSaved(recipe._id) ? (
+                        <i class="bi bi-heart-fill"></i>
+                      ) : (
+                        <i class="bi bi-heart"></i>
+                      )}
+                    </button>
+                  )}
+                </div>
+                <div className="paragraph instructions mb-">
+                  {recipe.instructions}
+                </div>
+                <hr />
+                <p className="paragraph">Cooking Time: {recipe.cookingTime} minutes</p>
+              </div>
+
             </div>
-            
-            <div className="paragraph instructions">
-              <p>{recipe.instructions}</p>
-            </div>
-            <img src={recipe.imageUrl} alt={recipe.name} />
-            <p className="paragraph">Cooking Time: {recipe.cookingTime} minutes</p>
           </li>
         ))}
       </ul>

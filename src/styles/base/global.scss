@@ -1,21 +1,22 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 html {
   font-size: 62.5% !important;
 }
 
+.app {
+  position: relative;
+}
+
 body {
-  background: $background-color;
   color: $text-color;
   font-family: 'Roboto';
 }
 
 section {
   margin-top: 8rem;
+
+  @media screen and (max-width: $mobile) {
+    margin-top: 4rem;
+  }
 }
 
 .visually-hidden {

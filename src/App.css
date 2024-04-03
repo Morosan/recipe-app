@@ -18,7 +18,7 @@
   background-color: #f2f2f2;
 } */
 
-.auth-container {
+/* .auth-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,7 +28,7 @@
   border-radius: 12px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   margin: 20px;
-}
+} */
 
 .form-group {
   display: flex;
@@ -94,7 +94,7 @@ input {
   margin-bottom: 10px;
 } */
 
-h2 {
+/* h2 {
   margin-top: 0;
 }
 
@@ -111,4 +111,4 @@ img {
 p {
   max-width: 400px;
   font-size: 12px;
-}
+} */

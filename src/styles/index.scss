@@ -1,14 +1,13 @@
+// Utils
+@import 'utils/variables';
+@import 'utils/mixins';
+// @import 'utils/functions';
+
 // Base
 @import 'base/reset';
-@import 'base/colors';
 @import 'base/fonts';
 @import 'base/global';
 @import 'base/typography';
-
-// Utils
-// @import 'utils/variables';
-@import 'utils/mixins';
-// @import 'utils/functions';
 
 // Components
 @import 'components/buttons';
@@ -18,6 +17,7 @@
 
 // Layout
 @import 'layout/main-nav';
+@import 'layout/mobile-nav';
 @import 'layout/header';
 @import 'layout/footer';
 // @import 'layout/grid';

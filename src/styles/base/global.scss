@@ -1,11 +1,9 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 html {
   font-size: 62.5% !important;
+}
+
+.app {
+  position: relative;
 }
 
 body {
@@ -15,6 +13,10 @@ body {
 
 section {
   margin-top: 8rem;
+
+  @media screen and (max-width: $mobile) {
+    margin-top: 4rem;
+  }
 }
 
 .visually-hidden {

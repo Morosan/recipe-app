@@ -15,8 +15,8 @@ export const Home = () => {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          // "https://recipe-app-backend-ggcu.onrender.com/recipes"
-          "http://localhost:3001/recipes"
+          "https://recipe-app-backend-ggcu.onrender.com/recipes"
+          // "http://localhost:3001/recipes"
         );
         setRecipes(response.data);
       } catch (err) {
@@ -27,8 +27,8 @@ export const Home = () => {
     const fetchSavedRecipes = async () => {
       try {
         const response = await axios.get(
-          // `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/ids/${userID}`
-          `http://localhost:3001/recipes/savedRecipes/ids/${userID}`
+          `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/ids/${userID}`
+          // `http://localhost:3001/recipes/savedRecipes/ids/${userID}`
         );
         setSavedRecipes(response.data.savedRecipes);
       } catch (err) {
@@ -43,8 +43,8 @@ export const Home = () => {
   const saveRecipe = async (recipeID) => {
     try {
       const response = await axios.put(
-        // "https://recipe-app-backend-ggcu.onrender.com/recipes"
-        "http://localhost:3001/recipes"
+        "https://recipe-app-backend-ggcu.onrender.com/recipes"
+        // "http://localhost:3001/recipes"
         , {
         recipeID,
         userID,

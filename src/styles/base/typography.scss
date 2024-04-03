@@ -1,0 +1,53 @@
+// Typography Variables
+$base-font-size: 16px; // Base font size
+$base-line-height: 1.5; // Base line height
+$heading-font-weight: bold; // Heading font weight
+
+// Typography Mixins
+@mixin font-size($size) {
+  font-size: $size;
+}
+
+@mixin line-height($height) {
+  line-height: $height;
+}
+
+@mixin font-weight($weight) {
+  font-weight: $weight;
+}
+
+// Typography Styles
+body {
+  font-family: Arial, sans-serif; // Default font family
+  font-size: $base-font-size; // Apply base font size
+  line-height: $base-line-height; // Apply base line height
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $heading-font-weight; // Apply heading font weight
+}
+
+// Example of usage
+.main-heading {
+  @include font-size(24px);
+  @include line-height(1.2);
+}
+
+.sub-heading {
+  @include font-size(18px);
+  @include line-height(1.3);
+}
+
+.paragraph {
+  @include font-size(16px);
+  @include line-height(1.5);
+}
+
+// Responsive Typography
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  // Adjust other font sizes as needed
+}

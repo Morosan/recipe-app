@@ -27,12 +27,24 @@
     .footer-item {
         padding: 2rem;
         margin: 1rem 4rem;
+
+        @media screen and (max-width: $mobile) {
+            padding: 1rem;
+            margin: 0;
+        }
     }
  
     .footer-main-nav {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-wrap: wrap;
+
+        @media screen and (max-width: $mobile) {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            width: 100%;
+        }
     }
 
     .footer-description {
@@ -61,5 +73,10 @@
         text-align: center;
         padding: 1.6rem 2rem;
         font-size: 1rem;
+    }
+
+    .credits {
+        @include link-hover($primary-color);
+        color: $white;
     }
 }

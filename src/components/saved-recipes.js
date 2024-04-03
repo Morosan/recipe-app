@@ -23,7 +23,7 @@ export const SavedRecipes = () => {
     fetchSavedRecipes();
   }, []);
   return (
-    <section className="container mb-5">
+    <section>
       <h1 className="main-heading">Saved Recipes:</h1>
       <ul>
         {savedRecipes.map((recipe) => (

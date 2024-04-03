@@ -1,19 +1,32 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 html {
   font-size: 62.5% !important;
 }
 
+.app {
+  position: relative;
+}
+
 body {
-  background: $background-color;
   color: $text-color;
   font-family: 'Roboto';
 }
 
 section {
-  margin-top: 4rem;
+  margin-top: 8rem;
+
+  @media screen and (max-width: $mobile) {
+    margin-top: 4rem;
+  }
+}
+
+.visually-hidden {
+  position: absolute !important;
+  clip: rect(0, 0, 0, 0) !important;
+  border: 0 !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  width: 1px !important;
 }

@@ -16,7 +16,7 @@ export const MobileNav = ({ open, setOpen }) => {
     return (
         <div className="mobile-nav">
             <button className={`navbar-toggler ${hamburgerOpen ? "open" : ""}`} onClick={() => toggleHamburger(!hamburgerOpen)}>
-                <i class="bi bi-list"></i>
+                <i className="bi bi-list"></i>
             </button>
             <ul className={`toggler-list ${hamburgerOpen ? "open" : ""}`}>
                 <li className="toggler-item">

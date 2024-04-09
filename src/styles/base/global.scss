@@ -30,3 +30,9 @@ section {
   white-space: nowrap !important;
   width: 1px !important;
 }
+
+.img-responsive {
+  width: auto;
+  max-width: 100%;
+  display: block;
+}

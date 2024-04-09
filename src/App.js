@@ -6,9 +6,9 @@ import { SavedRecipes } from "./pages/saved-recipes";
 import { Footer } from "./components/footer";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./App.css";
 import "./styles/index.scss";
 import { Header } from "./components/header";
+import Recipe from "./pages/recipe";
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
               <Route path="/auth" element={<Auth />} />
               <Route path="/create-recipe" element={<CreateRecipe />} />
               <Route path="/saved-recipes" element={<SavedRecipes />} />
+              <Route path="/recipe/:id" element={<Recipe />} />
             </Routes>
           </main>
 

@@ -21,8 +21,8 @@ export const Login = () => {
 
     try {
       const result = await axios.post(
-        // "https://recipe-app-backend-ggcu.onrender.com/auth/login"
-        "http://localhost:3001/auth/login"
+        "https://recipe-app-backend-ggcu.onrender.com/auth/login"
+        // "http://localhost:3001/auth/login"
         , {
         username,
         password,
@@ -40,32 +40,37 @@ export const Login = () => {
   return (
     <div className="login-container">
         <form onSubmit={handleSubmit}>
-            <h2 className="sub-heading mb-5">Login</h2>
-            <div className="form-group">
-            <label htmlFor="username">Username:</label>
+          <div className="d-flex mb-5">
+            <i className="bi bi-person-circle me-3"></i>
+            <h2 className="sub-heading">Login</h2>
+          </div>
+          <div className="mb-4">
+            <label className="form-label" htmlFor="username">Username:</label>
             <input
                 type="text"
                 id="username"
+                className="form-control"
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
             />
-            </div>
-            <div className="form-group">
-            <label htmlFor="password">Password:</label>
+          </div>
+          <div className="mb-4">
+            <label className="form-label" htmlFor="password">Password:</label>
             <input
                 type="password"
                 id="password"
+                className="form-control"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
             />
-            </div>
-            <Button 
+          </div>
+          <Button 
             className="button primary" 
             type="submit"
             isLoading={isLoading}
-            >
+          >
             Login
-            </Button>
+          </Button>
         </form>
     </div>
   );

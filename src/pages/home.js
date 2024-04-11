@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie"
 import { useGetUserID } from "../hooks/useGetUserID";
 import axios from "axios";
+import { Hero } from "../components/hero";
 
 export const Home = () => {
   const [recipes, setRecipes] = useState([]);
@@ -63,52 +64,56 @@ export const Home = () => {
   const isRecipeSaved = (id) => savedRecipes.includes(id);
 
   return (
-    <section className="container mb-5">
-      <h1 className="main-heading mb-5">Recipes:</h1>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <ul className="row">
-          {recipes.map((recipe) => (
-            <li className="col-lg-4 col-md-6" key={recipe._id}>
-              <div className="card">
-                <div href="/" className="img-wrapper">
-                  <img className="card-img" src={recipe.imageUrl} alt={recipe.name} />
-                </div>
-                <div className="card-inner-wrapper">
-                  <div className="title-wrapper">
-                    <Link 
-                      to={`/recipe/${recipe._id}`}
-                      className="card-title sub-heading"
-                    >
-                      {recipe.name}
-                    </Link>
-                    {cookies.access_token && (
-                      <button
-                        className="button favorite"
-                        onClick={() => saveRecipe(recipe._id)}
-                        disabled={isRecipeSaved(recipe._id)}
+    <>
+      <Hero />
+      <section className="container mb-5">
+        <h2 className="main-heading mb-5">Recipes:</h2>
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <ul className="row">
+            {recipes.map((recipe) => (
+              <li className="col-lg-4 col-md-6" key={recipe._id}>
+                <div className="card">
+                  <div href="/" className="img-wrapper">
+                  {recipe.imageUrl ? (
+                    <img className="card-img" src={recipe.imageUrl} alt={recipe.name} />
+                  ) : (
+                    <img className="card-img" src="./generic-receip-image.svg" alt="generic food" />
+                  )}
+                  </div>
+                  <div className="card-inner-wrapper">
+                    <div className="title-wrapper">
+                      <Link 
+                        to={`/recipe/${recipe._id}`}
+                        className="card-title sub-heading"
                       >
-                        {isRecipeSaved(recipe._id) ? (
-                          <i className="bi bi-heart-fill"></i>
-                        ) : (
-                          <i className="bi bi-heart"></i>
-                        )}
-                      </button>
-                    )}
+                        {recipe.name}
+                      </Link>
+                      {cookies.access_token && (
+                        <button
+                          className="button favorite"
+                          onClick={() => saveRecipe(recipe._id)}
+                          disabled={isRecipeSaved(recipe._id)}
+                        >
+                          {isRecipeSaved(recipe._id) ? (
+                            <i className="bi bi-heart-fill"></i>
+                          ) : (
+                            <i className="bi bi-heart"></i>
+                          )}
+                        </button>
+                      )}
+                    </div>
+                    <hr />
+                    <p className="paragraph">Cooking Time: {recipe.cookingTime} minutes</p>
                   </div>
-                  <div className="paragraph instructions mb-">
-                    {recipe.instructions}
-                  </div>
-                  <hr />
-                  <p className="paragraph">Cooking Time: {recipe.cookingTime} minutes</p>
-                </div>
 
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-    </section>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </>
   );
 };

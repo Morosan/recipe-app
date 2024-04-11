@@ -8,7 +8,11 @@ html {
 
 body {
   color: $text-color;
-  font-family: 'Roboto';
+  font-family: $primary-font;
+}
+
+input {
+  font-family: $primary-font;
 }
 
 section {

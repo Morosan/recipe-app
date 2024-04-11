@@ -6,8 +6,10 @@
   padding: 2rem;
   border-radius: 1.6rem;
   background: $white;
-  position: sticky;
+  position: fixed;
   top: 4rem;
+  left: 0;
+  right: 0;
   z-index: 10;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 

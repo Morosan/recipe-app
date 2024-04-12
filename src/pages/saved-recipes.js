@@ -27,12 +27,12 @@ export const SavedRecipes = () => {
   const removeSavedRecipe = async (recipeID) => {
     console.log("trigger removeSavedRecipe")
     try {
-      await axios.delete(
+      const response = await axios.delete(
         `https://recipe-app-backend-ggcu.onrender.com/users/${userID}/savedRecipes/${recipeID}`
-        // `http://localhost:3001/users/${userID}/savedRecipes/${recipeID}`
+        // `http://localhost:3001/${userID}/savedRecipes/${recipeID}`
       );
       // After removing the recipe, fetch the updated list of saved recipes
-      fetchSavedRecipes();
+      fetchSavedRecipes(response.data.savedRecipes);
     } catch (err) {
       console.log(err);
     }

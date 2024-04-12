@@ -17,7 +17,7 @@ export const Hero = ({ setFilteredRecipes }) => {
         <p className="paragraph hero-subtitle">Try new recipes, save your favorite ones, create your own masterpieces, and never run out of inspiration again!</p>
         <form>
           <label className="form-label" htmlFor="search">
-            <i class="bi bi-search"></i>
+            <i className="bi bi-search"></i>
             <input
               type="text"
               id="search"

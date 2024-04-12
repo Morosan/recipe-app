@@ -40,5 +40,13 @@
         max-height: 34rem;
         width: 100%;
         overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .bi-image {
+            font-size: 10rem;
+            padding-top: 4rem;
+        }
     }
 }

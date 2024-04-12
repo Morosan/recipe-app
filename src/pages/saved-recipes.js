@@ -8,22 +8,35 @@ export const SavedRecipes = () => {
   const [savedRecipes, setSavedRecipes] = useState([]);
   const userID = useGetUserID();
 
+  const fetchSavedRecipes = async () => {
+    try {
+      const response = await axios.get(
+        `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/${userID}`
+        // `http://localhost:3001/recipes/savedRecipes/${userID}`
+      );
+      setSavedRecipes(response.data.savedRecipes);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchSavedRecipes = async () => {
-      try {
-        const response = await axios.get(
-          // `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/${userID}`
-          `http://localhost:3001/recipes/savedRecipes/${userID}`
-        );
-        setSavedRecipes(response.data.savedRecipes);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     fetchSavedRecipes();
-  }, []);             
-
+  }, []);       
+  
+  const removeSavedRecipe = async (recipeID) => {
+    console.log("trigger removeSavedRecipe")
+    try {
+      await axios.delete(
+        `https://recipe-app-backend-ggcu.onrender.com/users/${userID}/savedRecipes/${recipeID}`
+        // `http://localhost:3001/users/${userID}/savedRecipes/${recipeID}`
+      );
+      // After removing the recipe, fetch the updated list of saved recipes
+      fetchSavedRecipes();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <section className="container mb-5">
@@ -34,7 +47,11 @@ export const SavedRecipes = () => {
           <li className="col-lg-4 col-md-6" key={recipe._id}>
             <div className="card">
               <div href="/" className="img-wrapper">
-                <img className="card-img" src={recipe.imageUrl} alt={recipe.name} />
+                {recipe.imageUrl ? (
+                  <img className="card-img" src={recipe.imageUrl} alt={recipe.name} />
+                ) : (
+                  <i className="bi bi-image"></i>
+                )}
               </div>
               <div className="card-inner-wrapper">
                 <div className="title-wrapper">
@@ -50,6 +67,13 @@ export const SavedRecipes = () => {
                 </div>
                 <hr />
                 <p className="paragraph">Cooking Time: {recipe.cookingTime} minutes</p>
+                <button
+                  className="button favorite"
+                  onClick={() => removeSavedRecipe(recipe._id)}
+                  // disabled={!isRecipeSaved(recipe._id)}
+                >
+                  <i className="bi bi-heart-fill"></i>
+                </button>
               </div>
 
             </div>
@@ -57,28 +81,5 @@ export const SavedRecipes = () => {
         ))}
       </ul>
     </section>
-
-    // <section className="container mb-5">
-    //   <h1 className="main-heading">Saved Recipes:</h1>
-    //   <ul>
-    //     {savedRecipes.map((recipe) => (
-    //       <li key={recipe._id}>
-    //         <div>
-    //           <h2>{recipe.name}</h2>
-    //         </div>
-    //         <ul>
-    //           {recipe.ingredients.map((ingredient) => (
-    //             <li key={ingredient._id}>
-    //               <p>{ingredient}</p>
-    //             </li>
-    //           ))}
-    //         </ul>
-    //         <p>{recipe.description}</p>
-    //         <img src={recipe.imageUrl} alt={recipe.name} />
-    //         <p>Cooking Time: {recipe.cookingTime} minutes</p>
-    //       </li>
-    //     ))}
-    //   </ul>
-    // </section>
   );
 };

@@ -12,17 +12,22 @@ export const Home = () => {
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line no-unused-vars
   const [cookies, setCookies] = useCookies(["access_token"]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
+  const [searchError, setSearchError] = useState(false);
+
 
   const userID = useGetUserID();
+
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          // "https://recipe-app-backend-ggcu.onrender.com/recipes"
-          "http://localhost:3001/recipes"
+          "https://recipe-app-backend-ggcu.onrender.com/recipes"
+          // "http://localhost:3001/recipes"
         );
         setRecipes(response.data);
+        setFilteredRecipes(response.data); 
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -33,8 +38,8 @@ export const Home = () => {
     const fetchSavedRecipes = async () => {
       try {
         const response = await axios.get(
-          // `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/ids/${userID}`
-          `http://localhost:3001/recipes/savedRecipes/ids/${userID}`
+          `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/ids/${userID}`
+          // `http://localhost:3001/recipes/savedRecipes/ids/${userID}`
         );
         setSavedRecipes(response.data.savedRecipes);
       } catch (err) {
@@ -49,8 +54,8 @@ export const Home = () => {
   const saveRecipe = async (recipeID) => {
     try {
       const response = await axios.put(
-        // "https://recipe-app-backend-ggcu.onrender.com/recipes"
-        "http://localhost:3001/recipes"
+        "https://recipe-app-backend-ggcu.onrender.com/recipes"
+        // "http://localhost:3001/recipes"
         , {
         recipeID,
         userID,
@@ -63,24 +68,41 @@ export const Home = () => {
 
   const isRecipeSaved = (id) => savedRecipes.includes(id);
 
+  const filterRecipes = (query) => {
+    setSearchError(false); // Reset search error
+    if (!query) {
+      setFilteredRecipes(recipes);
+    } else {
+      const filtered = recipes.filter((recipe) =>
+        recipe.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredRecipes(filtered);
+      if (filtered.length === 0) {
+        setSearchError(true); // Set search error if no recipes found
+      }
+    }
+  };
+
   return (
     <>
-      <Hero />
+      <Hero setFilteredRecipes={filterRecipes}/>
       <section className="container mb-5">
         <h2 className="main-heading mb-5">Recipes:</h2>
         {loading ? (
           <div>Loading...</div>
+        ) : searchError ? (
+          <h2>Error: No recipe was found with that name.</h2>
         ) : (
           <ul className="row">
-            {recipes.map((recipe) => (
+            {filteredRecipes.map((recipe) => (
               <li className="col-lg-4 col-md-6" key={recipe._id}>
                 <div className="card">
                   <div href="/" className="img-wrapper">
-                  {recipe.imageUrl ? (
-                    <img className="card-img" src={recipe.imageUrl} alt={recipe.name} />
-                  ) : (
-                    <img className="card-img" src="./generic-receip-image.svg" alt="generic food" />
-                  )}
+                    {recipe.imageUrl ? (
+                      <img className="card-img" src={recipe.imageUrl} alt={recipe.name} />
+                    ) : (
+                      <i className="bi bi-image"></i>
+                    )}
                   </div>
                   <div className="card-inner-wrapper">
                     <div className="title-wrapper">

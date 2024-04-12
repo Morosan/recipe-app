@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button } from "./button"
 
 export const Hero = ({ setFilteredRecipes }) => {
   const [searchQuery, setSearchQuery] = useState("");

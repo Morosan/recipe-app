@@ -8,7 +8,11 @@ html {
 
 body {
   color: $text-color;
-  font-family: 'Roboto';
+  font-family: $primary-font;
+}
+
+input {
+  font-family: $primary-font;
 }
 
 section {
@@ -29,4 +33,10 @@ section {
   padding: 0 !important;
   white-space: nowrap !important;
   width: 1px !important;
+}
+
+.img-responsive {
+  width: auto;
+  max-width: 100%;
+  display: block;
 }

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useGetUserID } from "../hooks/useGetUserID";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { Button } from "../components/button";
 
 export const CreateRecipe = () => {
   const userID = useGetUserID();
@@ -10,13 +11,14 @@ export const CreateRecipe = () => {
   const [cookies, _] = useCookies(["access_token"]);
   const [recipe, setRecipe] = useState({
     name: "",
-    description: "",
-    ingredients: [],
+    ingredients: [""],
     instructions: "",
     imageUrl: "",
     cookingTime: 0,
     userOwner: userID,
   });
+  const [isLoading, setLoading] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -39,7 +41,11 @@ export const CreateRecipe = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true)
     try {
+      if (!userID) {
+        throw new Error("User ID is null");
+      }
       await axios.post(
         // "https://recipe-app-backend-ggcu.onrender.com/recipes",
         "http://localhost:3001/recipes",
@@ -50,71 +56,91 @@ export const CreateRecipe = () => {
       );
 
       alert("Recipe Created");
+      setLoading(false)
       navigate("/");
     } catch (error) {
+      setLoading(false)
       console.error(error);
     }
   };
 
   return (
-    <section className="container mb-5">
-      <div className="create-recipe">
-        <h1>Create Recipe</h1>
+    <>
+      <section className="container mb-5">
+        <h1 className="main-heading mb-5">Create Recipe</h1>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={recipe.name}
-            onChange={handleChange}
-          />
-          <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            name="description"
-            value={recipe.description}
-            onChange={handleChange}
-          ></textarea>
-          <label htmlFor="ingredients">Ingredients</label>
-          {recipe.ingredients.map((ingredient, index) => (
+          <div className="mb-4">
+            <label className="form-label" htmlFor="name">Name:</label>
             <input
-              key={index}
+              className="form-control"
               type="text"
-              name="ingredients"
-              value={ingredient}
-              onChange={(event) => handleIngredientChange(event, index)}
+              id="name"
+              name="name"
+              value={recipe.name}
+              onChange={handleChange}
             />
-          ))}
-          <button type="button" onClick={handleAddIngredient}>
-            Add Ingredient
-          </button>
-          <label htmlFor="instructions">Instructions</label>
-          <textarea
-            id="instructions"
-            name="instructions"
-            value={recipe.instructions}
-            onChange={handleChange}
-          ></textarea>
-          <label htmlFor="imageUrl">Image URL</label>
-          <input
-            type="text"
-            id="imageUrl"
-            name="imageUrl"
-            value={recipe.imageUrl}
-            onChange={handleChange}
-          />
-          <label htmlFor="cookingTime">Cooking Time (minutes)</label>
-          <input
-            type="number"
-            id="cookingTime"
-            name="cookingTime"
-            value={recipe.cookingTime}
-            onChange={handleChange}
-          />
-          <button type="submit">Create Recipe</button>
+          </div>
+          <div className="mb-4">
+            <label className="form-label mb-2" htmlFor="ingredients">Ingredients:</label>
+            {recipe.ingredients.map((ingredient, index) => (
+              <input
+                className="form-control mb-3"
+                key={index}
+                type="text"
+                name="ingredients"
+                value={ingredient}
+                onChange={(event) => handleIngredientChange(event, index)}
+              />
+            ))}
+            <Button 
+              className="button secondary" 
+              type="button"
+              onClick={handleAddIngredient}
+            >
+              Add Ingredient
+            </Button>
+          </div>
+          <div className="mb-4">
+            <label className="form-label" htmlFor="instructions">Instructions:</label>
+            <textarea
+              className="form-control"
+              id="instructions"
+              name="instructions"
+              value={recipe.instructions}
+              onChange={handleChange}
+            ></textarea>
+          </div>
+          <div className="mb-4">
+            <label className="form-label" htmlFor="imageUrl">Image URL:</label>
+            <input
+              className="form-control"
+              type="text"
+              id="imageUrl"
+              name="imageUrl"
+              value={recipe.imageUrl}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label" htmlFor="cookingTime">Cooking Time (minutes):</label>
+            <input
+              className="form-control"
+              type="number"
+              id="cookingTime"
+              name="cookingTime"
+              value={recipe.cookingTime}
+              onChange={handleChange}
+            />
+          </div>
+          <Button 
+            className="button primary" 
+            type="submit"
+            isLoading={isLoading}
+          >
+            Create Recipe
+          </Button>
         </form>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };

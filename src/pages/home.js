@@ -14,38 +14,36 @@ export const Home = () => {
   const [cookies, setCookies] = useCookies(["access_token"]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [searchError, setSearchError] = useState(false);
-
-
   const userID = useGetUserID();
 
+  const fetchRecipes = async () => {
+    try {
+      const response = await axios.get(
+        // "https://recipe-app-backend-ggcu.onrender.com/recipes"
+        "http://localhost:3001/recipes"
+      );
+      setRecipes(response.data);
+      setFilteredRecipes(response.data); 
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
+  const fetchSavedRecipes = async () => {
+    try {
+      const response = await axios.get(
+        // `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/ids/${userID}`
+        `http://localhost:3001/recipes/savedRecipes/ids/${userID}`
+      );
+      setSavedRecipes(response.data.savedRecipes);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const response = await axios.get(
-          // "https://recipe-app-backend-ggcu.onrender.com/recipes"
-          "http://localhost:3001/recipes"
-        );
-        setRecipes(response.data);
-        setFilteredRecipes(response.data); 
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-        setLoading(false);
-      }
-    };
-
-    const fetchSavedRecipes = async () => {
-      try {
-        const response = await axios.get(
-          // `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/ids/${userID}`
-          `http://localhost:3001/recipes/savedRecipes/ids/${userID}`
-        );
-        setSavedRecipes(response.data.savedRecipes);
-      } catch (err) {
-        console.log(err);
-      }
-    };
 
     fetchRecipes();
     fetchSavedRecipes();
@@ -66,7 +64,23 @@ export const Home = () => {
     }
   };
 
-  const isRecipeSaved = (id) => savedRecipes.includes(id);
+  const removeSavedRecipe = async (recipeID) => {
+    try {
+      const response = await axios.delete(
+        // `http://localhost:3001/recipes/${userID}/savedRecipes/${recipeID}`
+        `http://localhost:3001/recipes/${userID}/savedRecipes/${recipeID}`
+        , {
+        headers: { authorization: cookies.access_token },
+      });
+      setSavedRecipes(response.data.savedRecipes);
+      fetchSavedRecipes(); // Fetch updated saved recipes after removal
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const isRecipeSaved = (id) => savedRecipes && savedRecipes.includes(id);
+
   const isRecipeOwner = (recipe) => {
     return recipe.userOwner === userID;
   };
@@ -118,8 +132,13 @@ export const Home = () => {
                       {cookies.access_token && (
                         <button
                           className="button favorite"
-                          onClick={() => saveRecipe(recipe._id)}
-                          disabled={isRecipeSaved(recipe._id)}
+                          onClick={() => {
+                            if (isRecipeSaved(recipe._id)) {
+                              removeSavedRecipe(recipe._id);
+                            } else {
+                              saveRecipe(recipe._id);
+                            }
+                          }}
                         >
                           {isRecipeSaved(recipe._id) ? (
                             <i className="bi bi-heart-fill"></i>

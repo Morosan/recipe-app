@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useGetUserID } from "../hooks/useGetUserID";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export const SavedRecipes = () => {
   const [savedRecipes, setSavedRecipes] = useState([]);
   const userID = useGetUserID();
+  const [cookies, _] = useCookies(["access_token"]);
 
   const fetchSavedRecipes = async () => {
     try {
@@ -28,8 +30,11 @@ export const SavedRecipes = () => {
     console.log("trigger removeSavedRecipe")
     try {
       const response = await axios.delete(
-        `https://recipe-app-backend-ggcu.onrender.com/users/${userID}/savedRecipes/${recipeID}`
-        // `http://localhost:3001/${userID}/savedRecipes/${recipeID}`
+        // `https://recipe-app-backend-ggcu.onrender.com/recipes/${userID}/savedRecipes/${recipeID}`,
+        `http://localhost:3001/recipes/${userID}/savedRecipes/${recipeID}`,
+        {
+          headers: { authorization: cookies.access_token },
+        }
       );
       // After removing the recipe, fetch the updated list of saved recipes
       fetchSavedRecipes(response.data.savedRecipes);

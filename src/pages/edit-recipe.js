@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useGetUserID } from "../hooks/useGetUserID";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useGetUserID } from "../hooks/useGetUserID";
 import { Button } from "../components/button";
 
-export const CreateRecipe = () => {
-  const userID = useGetUserID();
+const EditRecipe = () => {
+  const { recipeId } = useParams();
   // eslint-disable-next-line no-unused-vars
   const [cookies, _] = useCookies(["access_token"]);
+  const userID = useGetUserID();
   const [recipe, setRecipe] = useState({
     name: "",
     ingredients: [""],
@@ -19,6 +21,21 @@ export const CreateRecipe = () => {
   });
   const [isLoading, setLoading] = useState(false);
 
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try {
+        const response = await axios.get(
+          // `https://recipe-app-backend-ggcu.onrender.com/recipes/${recipeId}`
+          `http://localhost:3001/recipes/${recipeId}`
+        );
+        setRecipe(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchRecipe();
+  }, [recipeId]);
 
   const navigate = useNavigate();
 
@@ -46,16 +63,16 @@ export const CreateRecipe = () => {
       if (!userID) {
         throw new Error("User ID is null");
       }
-      await axios.post(
-        // "https://recipe-app-backend-ggcu.onrender.com/recipes",
-        "http://localhost:3001/recipes",
-        { ...recipe },
-        {
+      await axios.put(
+        // `https://recipe-app-backend-ggcu.onrender.com/recipes/${userID}/recipes/${recipeId}`
+        `http://localhost:3001/recipes/${userID}/recipes/${recipeId}`
+        , recipe
+        ,{
           headers: { authorization: cookies.access_token },
         }
       );
 
-      alert("Recipe Created");
+      alert("Recipe Updated");
       setLoading(false)
       navigate("/");
     } catch (error) {
@@ -64,10 +81,14 @@ export const CreateRecipe = () => {
     }
   };
 
+  if (!recipe) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <section className="container mb-5">
-        <h1 className="main-heading mb-5">Create Recipe</h1>
+        <h1 className="main-heading mb-5">Edit Recipe:</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="form-label" htmlFor="name">Name:</label>
@@ -137,10 +158,12 @@ export const CreateRecipe = () => {
             type="submit"
             isLoading={isLoading}
           >
-            Create Recipe
+            Update Recipe
           </Button>
         </form>
       </section>
     </>
   );
 };
+
+export default EditRecipe;

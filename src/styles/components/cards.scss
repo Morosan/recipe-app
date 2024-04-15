@@ -49,4 +49,8 @@
             padding-top: 4rem;
         }
     }
+    .edit-button {
+        @include link-hover($primary-color);
+        margin-left: 2rem;
+    }
 }

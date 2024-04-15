@@ -14,8 +14,8 @@ export const Register = () => {
   
       try {
         await axios.post(
-          "https://recipe-app-backend-ggcu.onrender.com/auth/register"
-          // "http://localhost:3001/auth/register"
+          // "https://recipe-app-backend-ggcu.onrender.com/auth/register"
+          "http://localhost:3001/auth/register"
           , {
           username,
           password,

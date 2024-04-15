@@ -47,8 +47,8 @@ export const CreateRecipe = () => {
         throw new Error("User ID is null");
       }
       await axios.post(
-        "https://recipe-app-backend-ggcu.onrender.com/recipes",
-        // "http://localhost:3001/recipes",
+        // "https://recipe-app-backend-ggcu.onrender.com/recipes",
+        "http://localhost:3001/recipes",
         { ...recipe },
         {
           headers: { authorization: cookies.access_token },

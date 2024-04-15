@@ -23,8 +23,8 @@ export const Home = () => {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get(
-          "https://recipe-app-backend-ggcu.onrender.com/recipes"
-          // "http://localhost:3001/recipes"
+          // "https://recipe-app-backend-ggcu.onrender.com/recipes"
+          "http://localhost:3001/recipes"
         );
         setRecipes(response.data);
         setFilteredRecipes(response.data); 
@@ -38,8 +38,8 @@ export const Home = () => {
     const fetchSavedRecipes = async () => {
       try {
         const response = await axios.get(
-          `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/ids/${userID}`
-          // `http://localhost:3001/recipes/savedRecipes/ids/${userID}`
+          // `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/ids/${userID}`
+          `http://localhost:3001/recipes/savedRecipes/ids/${userID}`
         );
         setSavedRecipes(response.data.savedRecipes);
       } catch (err) {
@@ -54,8 +54,8 @@ export const Home = () => {
   const saveRecipe = async (recipeID) => {
     try {
       const response = await axios.put(
-        "https://recipe-app-backend-ggcu.onrender.com/recipes"
-        // "http://localhost:3001/recipes"
+        // "https://recipe-app-backend-ggcu.onrender.com/recipes"
+        "http://localhost:3001/recipes"
         , {
         recipeID,
         userID,
@@ -67,6 +67,9 @@ export const Home = () => {
   };
 
   const isRecipeSaved = (id) => savedRecipes.includes(id);
+  const isRecipeOwner = (recipe) => {
+    return recipe.userOwner === userID;
+  };
 
   const filterRecipes = (query) => {
     setSearchError(false); // Reset search error
@@ -111,7 +114,7 @@ export const Home = () => {
                         className="card-title sub-heading"
                       >
                         {recipe.name}
-                      </Link>
+                      </Link> 
                       {cookies.access_token && (
                         <button
                           className="button favorite"
@@ -127,7 +130,14 @@ export const Home = () => {
                       )}
                     </div>
                     <hr />
-                    <p className="paragraph">Cooking Time: {recipe.cookingTime} minutes</p>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <p className="paragraph">Cooking Time: {recipe.cookingTime} minutes</p>
+                      {isRecipeOwner(recipe) && (
+                        <Link to={`/edit-recipe/${recipe._id}`} className="edit-button">
+                          Edit
+                        </Link>
+                      )}
+                    </div>
                   </div>
 
                 </div>

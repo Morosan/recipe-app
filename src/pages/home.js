@@ -112,41 +112,42 @@ export const Home = () => {
         ) : (
           <ul className="row">
             {filteredRecipes.map((recipe) => (
-              <li className="col-lg-4 col-md-6" key={recipe._id}>
-                <div className="card">
+              <li className="col-lg-4 col-md-6 mb-4" key={recipe._id}>
+                <div className="card flex-fill">
                   <div href="/" className="img-wrapper">
                     {recipe.imageUrl ? (
                       <img className="card-img" src={recipe.imageUrl} alt={recipe.name} />
                     ) : (
                       <i className="bi bi-image"></i>
                     )}
+
+                    {cookies.access_token && (
+                      <button
+                        className="button favorite"
+                        onClick={() => {
+                          if (isRecipeSaved(recipe._id)) {
+                            removeSavedRecipe(recipe._id);
+                          } else {
+                            saveRecipe(recipe._id);
+                          }
+                        }}
+                      >
+                        {isRecipeSaved(recipe._id) ? (
+                          <i className="bi bi-heart-fill"></i>
+                        ) : (
+                          <i className="bi bi-heart "></i>
+                        )}
+                      </button>
+                    )}
                   </div>
-                  <div className="card-inner-wrapper">
-                    <div className="title-wrapper">
+                  <div className="card-body d-flex flex-column card-inner-wrapper d-flex flex-column">
+                    <div className="title-wrapper mb-auto">
                       <Link 
                         to={`/recipe/${recipe._id}`}
                         className="card-title sub-heading"
                       >
                         {recipe.name}
                       </Link> 
-                      {cookies.access_token && (
-                        <button
-                          className="button favorite"
-                          onClick={() => {
-                            if (isRecipeSaved(recipe._id)) {
-                              removeSavedRecipe(recipe._id);
-                            } else {
-                              saveRecipe(recipe._id);
-                            }
-                          }}
-                        >
-                          {isRecipeSaved(recipe._id) ? (
-                            <i className="bi bi-heart-fill"></i>
-                          ) : (
-                            <i className="bi bi-heart"></i>
-                          )}
-                        </button>
-                      )}
                     </div>
                     <hr />
                     <div className="d-flex justify-content-between align-items-center">

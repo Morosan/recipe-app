@@ -45,47 +45,51 @@ export const SavedRecipes = () => {
   };
 
   return (
-    <section className="container mb-5">
-      <h1 className="main-heading mb-5">Saved Recipes:</h1>
-      
-      <ul className="row">
-        {savedRecipes.map((recipe) => (
-          <li className="col-lg-4 col-md-6" key={recipe._id}>
-            <div className="card">
-              <div href="/" className="img-wrapper">
-                {recipe.imageUrl ? (
-                  <img className="card-img" src={recipe.imageUrl} alt={recipe.name} />
-                ) : (
-                  <i className="bi bi-image"></i>
-                )}
-              </div>
-              <div className="card-inner-wrapper">
-                <div className="title-wrapper">
-                  <Link 
-                    to={`/recipe/${recipe._id}`}
-                    className="card-title sub-heading"
+    <>
+      <section className="ghost-section"></section>
+      <section className="container mb-5">
+        <h1 className="main-heading mb-5">Saved Recipes:</h1>
+        
+        <ul className="row">
+          {userID !== null ? 
+          savedRecipes.map((recipe) => (
+            <li className="col-lg-4 col-md-6" key={recipe._id}>
+              <div className="card">
+                <div href="/" className="img-wrapper">
+                  {recipe.imageUrl ? (
+                    <img className="card-img" src={recipe.imageUrl} alt={recipe.name} />
+                  ) : (
+                    <i className="bi bi-image"></i>
+                  )}
+                </div>
+                <div className="card-inner-wrapper">
+                  <div className="title-wrapper">
+                    <Link 
+                      to={`/recipe/${recipe._id}`}
+                      className="card-title sub-heading"
+                    >
+                      {recipe.name}
+                    </Link>
+                  </div>
+                
+                  <hr />
+                  <p className="paragraph">Cooking Time: {recipe.cookingTime} minutes</p>
+                  <button
+                    className="button favorite"
+                    onClick={() => removeSavedRecipe(recipe._id)}
+                    // disabled={!isRecipeSaved(recipe._id)}
                   >
-                    {recipe.name}
-                  </Link>
+                    <i className="bi bi-heart-fill"></i>
+                  </button>
                 </div>
-                <div className="paragraph instructions mb-">
-                  {recipe.instructions}
-                </div>
-                <hr />
-                <p className="paragraph">Cooking Time: {recipe.cookingTime} minutes</p>
-                <button
-                  className="button favorite"
-                  onClick={() => removeSavedRecipe(recipe._id)}
-                  // disabled={!isRecipeSaved(recipe._id)}
-                >
-                  <i className="bi bi-heart-fill"></i>
-                </button>
-              </div>
 
-            </div>
-          </li>
-        ))}
-      </ul>
-    </section>
+              </div>
+            </li>
+          )) : 
+          <h2>You need to login in order to have saved recipes.</h2>}
+          {}
+        </ul>
+      </section>
+    </>
   );
 };

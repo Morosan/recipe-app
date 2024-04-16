@@ -87,6 +87,7 @@ const EditRecipe = () => {
 
   return (
     <>
+      <section className="ghost-section"></section>
       <section className="container mb-5">
         <h1 className="main-heading mb-5">Edit Recipe:</h1>
         <form onSubmit={handleSubmit}>

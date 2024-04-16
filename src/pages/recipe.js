@@ -61,60 +61,63 @@ const Recipe = () => {
   }
 
   return (
-    <section className="container mb-5">
-      <div className="receip-detail-hero">
-        <div className="row">
-          <div className="col-md-6">
-            <div href="/" className="img-wrapper mb-5">
-              <img className="img-responsive" src={recipe.imageUrl} alt={recipe.name} />
-            </div>
-          </div>
-          <div className="col-md-6">
-            <h1 className="main-heading mb-5">{recipe.name}</h1>
-            <div className="cooking-time-wrapper mb-3">
-              <i className="bi bi-alarm-fill"></i>
-              <span>Cooking Time: {recipe.cookingTime} minutes</span>
-            </div>
-            {recipe.description && (
-              <div className="recipe-description-wrapper mb-5">
-                <h3 className="sub-heading mb-3">Description:</h3>
-                <p>{recipe.description}</p>
+    <>
+      <section className="ghost-section"></section>
+      <section className="container mb-5">
+        <div className="receip-detail-hero">
+          <div className="row">
+            <div className="col-md-6">
+              <div href="/" className="img-wrapper mb-5">
+                <img className="img-responsive" src={recipe.imageUrl} alt={recipe.name} />
               </div>
-            )}
-            <div className="ingredients-wrapper mb-5">
-              <h3 className="sub-heading mb-3">Ingredients:</h3>
-              <ul>
-                {recipe.ingredients.map((ingredient, index) => (
-                  <li key={index} className="form-check mb-3">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      checked={selectedIngredients[ingredient]}
-                      onChange={() => handleCheckboxChange(ingredient)}
-                      id={`ingredient_${index}`}
-                    />
-                    <label className="form-check-label" htmlFor={`ingredient_${index}`}>
-                      {ingredient}
-                    </label>
-                  </li>
-                ))}
-              </ul>
-              <Button 
-                className="button secondary" 
-                type="button"
-                onClick={handleClearIngredients}
-              >
-                Uncheck All
-              </Button>
             </div>
-            <div className="instructions-wrapper">
-              <h3 className="sub-heading mb-3">Instructions:</h3>
-              <p>{recipe.instructions}</p>
+            <div className="col-md-6">
+              <h1 className="main-heading mb-5">{recipe.name}</h1>
+              <div className="cooking-time-wrapper mb-3">
+                <i className="bi bi-alarm-fill"></i>
+                <span>Cooking Time: {recipe.cookingTime} minutes</span>
+              </div>
+              {recipe.description && (
+                <div className="recipe-description-wrapper mb-5">
+                  <h3 className="sub-heading mb-3">Description:</h3>
+                  <p>{recipe.description}</p>
+                </div>
+              )}
+              <div className="ingredients-wrapper mb-5">
+                <h3 className="sub-heading mb-3">Ingredients:</h3>
+                <ul>
+                  {recipe.ingredients.map((ingredient, index) => (
+                    <li key={index} className="form-check mb-3">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        checked={selectedIngredients[ingredient]}
+                        onChange={() => handleCheckboxChange(ingredient)}
+                        id={`ingredient_${index}`}
+                      />
+                      <label className="form-check-label" htmlFor={`ingredient_${index}`}>
+                        {ingredient}
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+                <Button 
+                  className="button secondary" 
+                  type="button"
+                  onClick={handleClearIngredients}
+                >
+                  Uncheck All
+                </Button>
+              </div>
+              <div className="instructions-wrapper">
+                <h3 className="sub-heading mb-3">Instructions:</h3>
+                <p>{recipe.instructions}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

@@ -13,11 +13,13 @@ export const SavedRecipes = () => {
 
   const fetchSavedRecipes = async () => {
     try {
-      const response = await axios.get(
-        `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/${userID}`
-        // `http://localhost:3001/recipes/savedRecipes/${userID}`
-      );
-      setSavedRecipes(response.data.savedRecipes);
+      if (userID) {
+        const response = await axios.get(
+          `https://recipe-app-backend-ggcu.onrender.com/recipes/savedRecipes/${userID}`
+          // `http://localhost:3001/recipes/savedRecipes/${userID}`
+        );
+        setSavedRecipes(response.data.savedRecipes);
+      }
     } catch (err) {
       console.log(err);
     }

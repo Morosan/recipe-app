@@ -19,7 +19,6 @@ export const CreateRecipe = () => {
   });
   const [isLoading, setLoading] = useState(false);
 
-
   const navigate = useNavigate();
 
   const handleChange = (event) => {

@@ -1,6 +1,8 @@
 .card {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     border-radius: 1.2rem;
     background-color: $gray-400;
@@ -12,7 +14,6 @@
         text-decoration: none;
         font-weight: 700;
         cursor: pointer;
-        margin-right: auto;
     }
 
     .card-inner-wrapper {
@@ -27,7 +28,13 @@
     }
 
     .favorite {
-        margin-left: 2rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        .bi {
+            font-size: 4rem;
+        }
     }
 
     .card-img {
@@ -37,12 +44,13 @@
     }
 
     .img-wrapper {
-        max-height: 34rem;
+        height: 34rem;
         width: 100%;
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
 
         .bi-image {
             font-size: 10rem;
@@ -53,4 +61,27 @@
         @include link-hover($primary-color);
         margin-left: 2rem;
     }
+}
+
+
+@-webkit-keyframes like-a {
+    100% {
+        -webkit-transform:scale(1.03);
+        transform:scale(1.03);
+        -moz-transform:scale(1.03);
+    } 
+}
+@-moz-keyframes like-a {
+    100% {
+        -webkit-transform:scale(1.03);
+        transform:scale(1.03);
+        -moz-transform:scale(1.03);
+    } 
+}
+@keyframes like-a {
+    100% {
+        -webkit-transform:scale(1.03);
+        transform:scale(1.03);
+        -moz-transform:scale(1.03);
+    } 
 }

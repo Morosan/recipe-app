@@ -66,80 +66,83 @@ export const CreateRecipe = () => {
 
   return (
     <>
+      <section className="ghost-section"></section>
       <section className="container mb-5">
         <h1 className="main-heading mb-5">Create Recipe</h1>
+        {userID !== null ?
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="form-label" htmlFor="name">Name:</label>
+        <div className="mb-4">
+          <label className="form-label" htmlFor="name">Name:</label>
+          <input
+            className="form-control"
+            type="text"
+            id="name"
+            name="name"
+            value={recipe.name}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="form-label mb-2" htmlFor="ingredients">Ingredients:</label>
+          {recipe.ingredients.map((ingredient, index) => (
             <input
-              className="form-control"
+              className="form-control mb-3"
+              key={index}
               type="text"
-              id="name"
-              name="name"
-              value={recipe.name}
-              onChange={handleChange}
+              name="ingredients"
+              value={ingredient}
+              onChange={(event) => handleIngredientChange(event, index)}
             />
-          </div>
-          <div className="mb-4">
-            <label className="form-label mb-2" htmlFor="ingredients">Ingredients:</label>
-            {recipe.ingredients.map((ingredient, index) => (
-              <input
-                className="form-control mb-3"
-                key={index}
-                type="text"
-                name="ingredients"
-                value={ingredient}
-                onChange={(event) => handleIngredientChange(event, index)}
-              />
-            ))}
-            <Button 
-              className="button secondary" 
-              type="button"
-              onClick={handleAddIngredient}
-            >
-              Add Ingredient
-            </Button>
-          </div>
-          <div className="mb-4">
-            <label className="form-label" htmlFor="instructions">Instructions:</label>
-            <textarea
-              className="form-control"
-              id="instructions"
-              name="instructions"
-              value={recipe.instructions}
-              onChange={handleChange}
-            ></textarea>
-          </div>
-          <div className="mb-4">
-            <label className="form-label" htmlFor="imageUrl">Image URL:</label>
-            <input
-              className="form-control"
-              type="text"
-              id="imageUrl"
-              name="imageUrl"
-              value={recipe.imageUrl}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label" htmlFor="cookingTime">Cooking Time (minutes):</label>
-            <input
-              className="form-control"
-              type="number"
-              id="cookingTime"
-              name="cookingTime"
-              value={recipe.cookingTime}
-              onChange={handleChange}
-            />
-          </div>
+          ))}
           <Button 
-            className="button primary" 
-            type="submit"
-            isLoading={isLoading}
+            className="button secondary" 
+            type="button"
+            onClick={handleAddIngredient}
           >
-            Create Recipe
+            Add Ingredient
           </Button>
-        </form>
+        </div>
+        <div className="mb-4">
+          <label className="form-label" htmlFor="instructions">Instructions:</label>
+          <textarea
+            className="form-control"
+            id="instructions"
+            name="instructions"
+            value={recipe.instructions}
+            onChange={handleChange}
+          ></textarea>
+        </div>
+        <div className="mb-4">
+          <label className="form-label" htmlFor="imageUrl">Image URL:</label>
+          <input
+            className="form-control"
+            type="text"
+            id="imageUrl"
+            name="imageUrl"
+            value={recipe.imageUrl}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="cookingTime">Cooking Time (minutes):</label>
+          <input
+            className="form-control"
+            type="number"
+            id="cookingTime"
+            name="cookingTime"
+            value={recipe.cookingTime}
+            onChange={handleChange}
+          />
+        </div>
+        <Button 
+          className="button primary" 
+          type="submit"
+          isLoading={isLoading}
+        >
+          Create Recipe
+        </Button>
+      </form> : 
+      <h2>You need to login in order to create recipes.</h2>}
       </section>
     </>
   );

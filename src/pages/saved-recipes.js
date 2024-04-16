@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useGetUserID } from "../hooks/useGetUserID";
@@ -30,8 +31,8 @@ export const SavedRecipes = () => {
     console.log("trigger removeSavedRecipe")
     try {
       const response = await axios.delete(
-        // `https://recipe-app-backend-ggcu.onrender.com/recipes/${userID}/savedRecipes/${recipeID}`,
-        `http://localhost:3001/recipes/${userID}/savedRecipes/${recipeID}`,
+        `https://recipe-app-backend-ggcu.onrender.com/recipes/${userID}/savedRecipes/${recipeID}`,
+        // `http://localhost:3001/recipes/${userID}/savedRecipes/${recipeID}`,
         {
           headers: { authorization: cookies.access_token },
         }

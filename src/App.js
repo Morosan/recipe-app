@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles/index.scss";
 import { Header } from "./components/header";
 import Recipe from "./pages/recipe";
+import EditRecipe from "./pages/edit-recipe";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/create-recipe" element={<CreateRecipe />} />
+              <Route path="/edit-recipe/:recipeId" element={<EditRecipe />} />
               <Route path="/saved-recipes" element={<SavedRecipes />} />
               <Route path="/recipe/:id" element={<Recipe />} />
             </Routes>

@@ -25,8 +25,8 @@ const EditRecipe = () => {
     const fetchRecipe = async () => {
       try {
         const response = await axios.get(
-          // `https://recipe-app-backend-ggcu.onrender.com/recipes/${recipeId}`
-          `http://localhost:3001/recipes/${recipeId}`
+          `https://recipe-app-backend-ggcu.onrender.com/recipes/${recipeId}`
+          // `http://localhost:3001/recipes/${recipeId}`
         );
         setRecipe(response.data);
       } catch (error) {
@@ -64,8 +64,8 @@ const EditRecipe = () => {
         throw new Error("User ID is null");
       }
       await axios.put(
-        // `https://recipe-app-backend-ggcu.onrender.com/recipes/${userID}/recipes/${recipeId}`
-        `http://localhost:3001/recipes/${userID}/recipes/${recipeId}`
+        `https://recipe-app-backend-ggcu.onrender.com/recipes/${userID}/recipes/${recipeId}`
+        // `http://localhost:3001/recipes/${userID}/recipes/${recipeId}`
         , recipe
         ,{
           headers: { authorization: cookies.access_token },

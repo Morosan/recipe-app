@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie"
 import { useGetUserID } from "../hooks/useGetUserID";
 import axios from "axios";
 import { Hero } from "../components/hero";
+import { Spinner } from "react-bootstrap";
 
 export const Home = () => {
   const [recipes, setRecipes] = useState([]);
@@ -26,7 +27,7 @@ export const Home = () => {
       setFilteredRecipes(response.data); 
       setLoading(false);
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching recipes:", err);
       setLoading(false);
     }
   };
@@ -39,7 +40,7 @@ export const Home = () => {
       );
       setSavedRecipes(response.data.savedRecipes);
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching saved recipes:", err);
     }
   };
 
@@ -106,7 +107,11 @@ export const Home = () => {
       <section className="container mb-5">
         <h2 className="main-heading mb-5">Recipes:</h2>
         {loading ? (
-          <div>Loading...</div>
+          <div className="d-flex justify-content-center">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
         ) : searchError ? (
           <h2>Error: No recipe was found with that name.</h2>
         ) : (

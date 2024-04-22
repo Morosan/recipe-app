@@ -49,4 +49,18 @@
     font-size: 2rem;
     border: none;
   }
+
+  &.danger {
+    color: $error-color;
+    background: transparent;
+    border-color: $error-color;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background: $error-color;
+      color: $white;
+      border: 1px solid transparent;
+    }
+  }
 }

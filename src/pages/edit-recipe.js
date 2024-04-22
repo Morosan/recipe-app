@@ -81,6 +81,10 @@ const EditRecipe = () => {
     }
   };
 
+  const deleteRecipe = async (event) => {
+    alert("Recipe Deleted");
+  }
+
   if (!recipe) {
     return <div>Loading...</div>;
   }
@@ -154,13 +158,23 @@ const EditRecipe = () => {
               onChange={handleChange}
             />
           </div>
-          <Button 
-            className="button primary" 
-            type="submit"
-            isLoading={isLoading}
-          >
-            Update Recipe
-          </Button>
+          <div className="d-flex">
+            <Button 
+              className="button primary me-3" 
+              type="submit"
+              isLoading={isLoading}
+            >
+              Update Recipe
+            </Button>
+            <Button 
+              className="button secondary danger" 
+              type="button"
+              isLoading={isLoading}
+              onClick={deleteRecipe}
+            >
+              Delete Recipe
+            </Button>
+          </div>
         </form>
       </section>
     </>

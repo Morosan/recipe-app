@@ -81,6 +81,27 @@ const EditRecipe = () => {
     }
   };
 
+  const deleteRecipe = async (event) => {
+    event.preventDefault();
+    setLoading(true)
+    try {
+      await axios.delete(
+        `https://recipe-app-backend-ggcu.onrender.com/recipes/${recipeId}`
+        // `http://localhost:3001/recipes/${recipeId}`,
+        , {
+          headers: { authorization: cookies.access_token },
+        }
+      );
+  
+      alert("Recipe Deleted");
+      setLoading(false)
+      navigate("/");
+    } catch (error) {
+      setLoading(false)
+      console.error(error);
+    }
+  }
+
   if (!recipe) {
     return <div>Loading...</div>;
   }
@@ -154,13 +175,23 @@ const EditRecipe = () => {
               onChange={handleChange}
             />
           </div>
-          <Button 
-            className="button primary" 
-            type="submit"
-            isLoading={isLoading}
-          >
-            Update Recipe
-          </Button>
+          <div className="d-flex">
+            <Button 
+              className="button primary me-3" 
+              type="submit"
+              isLoading={isLoading}
+            >
+              Update Recipe
+            </Button>
+            <Button 
+              className="button secondary danger" 
+              type="button"
+              isLoading={isLoading}
+              onClick={deleteRecipe}
+            >
+              Delete Recipe
+            </Button>
+          </div>
         </form>
       </section>
     </>

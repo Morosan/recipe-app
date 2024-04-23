@@ -82,7 +82,24 @@ const EditRecipe = () => {
   };
 
   const deleteRecipe = async (event) => {
-    alert("Recipe Deleted");
+    event.preventDefault();
+    setLoading(true)
+    try {
+      await axios.delete(
+        `https://recipe-app-backend-ggcu.onrender.com/recipes/${recipeId}`
+        // `http://localhost:3001/recipes/${recipeId}`,
+        , {
+          headers: { authorization: cookies.access_token },
+        }
+      );
+  
+      alert("Recipe Deleted");
+      setLoading(false)
+      navigate("/");
+    } catch (error) {
+      setLoading(false)
+      console.error(error);
+    }
   }
 
   if (!recipe) {

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { Button } from "../components/button";
+import { useGetUserID } from "../hooks/useGetUserID";
 
 const Recipe = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedIngredients, setSelectedIngredients] = useState({});
+  const userID = useGetUserID();
+
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -60,6 +63,10 @@ const Recipe = () => {
     return <section className="container mb-5">Recipe not found!</section>;
   }
 
+  const isRecipeOwner = (recipe) => {
+    return recipe.userOwner === userID;
+  };
+
   return (
     <>
       <section className="ghost-section"></section>
@@ -72,7 +79,15 @@ const Recipe = () => {
               </div>
             </div>
             <div className="col-md-6">
-              <h1 className="main-heading mb-5">{recipe.name}</h1>
+              <div className="d-flex justify-content-between align-items-center mb-5">
+                <h1 className="main-heading ">{recipe.name}</h1>
+                {isRecipeOwner(recipe) && (
+                  <Link to={`/edit-recipe/${recipe._id}`} className="edit-button ms-5">
+                    <span className="visually-hidden">Edit recipe</span>
+                    <i className="bi bi-pencil-square"></i>
+                  </Link>
+                )}
+              </div>
               <div className="cooking-time-wrapper mb-3">
                 <i className="bi bi-alarm-fill"></i>
                 <span>Cooking Time: {recipe.cookingTime} minutes</span>

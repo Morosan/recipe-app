@@ -19,7 +19,8 @@ const EditRecipe = () => {
     cookingTime: 0,
     userOwner: userID,
   });
-  const [isLoading, setLoading] = useState(false);
+  const [updateLoading, setUpdateLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -58,7 +59,7 @@ const EditRecipe = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true)
+    setUpdateLoading(true);
     try {
       if (!userID) {
         throw new Error("User ID is null");
@@ -73,17 +74,17 @@ const EditRecipe = () => {
       );
 
       alert("Recipe Updated");
-      setLoading(false)
-      navigate("/");
+      setUpdateLoading(false);
+      navigate(`/recipe/${recipeId}`);
     } catch (error) {
-      setLoading(false)
+      setUpdateLoading(false);
       console.error(error);
     }
   };
 
   const deleteRecipe = async (event) => {
     event.preventDefault();
-    setLoading(true)
+    setDeleteLoading(true)
     try {
       await axios.delete(
         `https://recipe-app-backend-ggcu.onrender.com/recipes/${recipeId}`
@@ -94,10 +95,10 @@ const EditRecipe = () => {
       );
   
       alert("Recipe Deleted");
-      setLoading(false)
+      setDeleteLoading(false)
       navigate("/");
     } catch (error) {
-      setLoading(false)
+      setDeleteLoading(false)
       console.error(error);
     }
   }
@@ -179,14 +180,14 @@ const EditRecipe = () => {
             <Button 
               className="button primary me-3" 
               type="submit"
-              isLoading={isLoading}
+              isLoading={updateLoading}
             >
               Update Recipe
             </Button>
             <Button 
               className="button secondary danger" 
               type="button"
-              isLoading={isLoading}
+              isLoading={deleteLoading}
               onClick={deleteRecipe}
             >
               Delete Recipe

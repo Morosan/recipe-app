@@ -123,7 +123,7 @@ export const Home = () => {
   return (
     <>
       <Hero setFilteredRecipes={filterRecipes}/>
-      <section className="container mb-5">
+      <section className="container mt-5 mb-5">
         <h2 className="main-heading mb-5">Recipes:</h2>
         {loading ? (
           <div className="d-flex justify-content-center">

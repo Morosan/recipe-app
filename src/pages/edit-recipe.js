@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useGetUserID } from "../hooks/useGetUserID";
 import { Button } from "../components/button";
+import Tiptap from "../utils/Tiptap";
 
 const EditRecipe = () => {
   const { recipeId } = useParams();
@@ -153,6 +154,7 @@ const EditRecipe = () => {
               value={recipe.instructions}
               onChange={handleChange}
             ></textarea>
+            <Tiptap/>
           </div>
           <div className="mb-4">
             <label className="form-label" htmlFor="imageUrl">Image URL:</label>

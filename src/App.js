@@ -10,6 +10,7 @@ import "./styles/index.scss";
 import { Header } from "./components/header";
 import Recipe from "./pages/recipe";
 import EditRecipe from "./pages/edit-recipe";
+import Tiptap from "./utils/Tiptap";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/edit-recipe/:recipeId" element={<EditRecipe />} />
               <Route path="/saved-recipes" element={<SavedRecipes />} />
               <Route path="/recipe/:id" element={<Recipe />} />
+              <Route path="/tiptap" element={<Tiptap />} />
             </Routes>
           </main>
 
